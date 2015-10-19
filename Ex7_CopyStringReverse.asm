@@ -1,25 +1,24 @@
 ; Exercise 2: Copy a String in Reverse Order
 
 .386
-.model flat,stdcall
+.model flat, stdcall
 .stack 4096
-ExitProcess proto,dwExitCode:dword
+ExitProcess proto, dwExitCode:dword
 
 .data
-source  BYTE  "This is the source string",0
-target  BYTE  SIZEOF source DUP('#')
+source BYTE "This is the source string", 0
+target BYTE SIZEOF source DUP('#')
 
 .code
 main PROC
-; Point ESI to the last character in the source string:
+	mov esi, 0
+	mov ecx, SIZEOF source
+L1:
+	mov al, source[ecx]
+	mov target[esi], al
+	inc esi
+	loop L1
 
-; Point EDI to the beginning of the target string:
-; We do not copy the null terminator byte.
-
-; Your code goes here	
-
-	mov	BYTE PTR [edi],0			; add a null byte to the target
-
-	Invoke ExitProcess,0
+	invoke ExitProcess, 0
 main ENDP
 END main
